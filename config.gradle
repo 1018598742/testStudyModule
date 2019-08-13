@@ -1,0 +1,35 @@
+ext {
+
+    isModule = true // 组件开关： true 组件 false 集成
+
+    defaultConfig = [
+            minSdkVersion            : 15,
+            targetSdkVersion         : 29,
+            versionCode              : 1,
+            versionName              : "1.0",
+            testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
+    ]
+
+    android = [
+            compileSdkVersion: 29
+    ]
+
+    applicationId = [
+            app  : "com.archer.componentsarchitecture",
+            card1: "com.archer.card1",
+            card2: "com.archer.card2"
+    ]
+
+    supportLibrary = "29.0.1"
+    appcompatv7a = "androidx.appcompat:appcompat:${supportLibrary}"
+
+    resourcePrefixs = [
+            card1: "card1",
+            card2: "card2"
+    ]
+
+    router = [
+            arouter  : "com.alibaba:arouter-api:1.2.1.1",
+            processor: "com.alibaba:arouter-compiler:1.1.2.1"
+    ]
+}

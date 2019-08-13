@@ -1,0 +1,68 @@
+if (isModule) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+def cfg = rootProject.ext.defaultConfig
+def drd = rootProject.ext.android
+def app = rootProject.ext.applicationId
+
+android {
+    compileSdkVersion drd.compileSdkVersion
+
+    defaultConfig {
+
+        if (isModule) {
+            applicationId app['card2']
+        }
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+        testInstrumentationRunner cfg.testInstrumentationRunner
+
+        resourcePrefix rootProject.ext.resourcePrefixs['card2']
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Manifest.xml  application配置
+    sourceSets {
+        main {
+            if (isModule) {
+                // src/main下新建文件夹，存放组件模式下的Manifest.xml与Application
+                manifest.srcFile 'src/main/component/AndroidManifest.xml'
+                java.srcDirs = ['src/main/java', 'src/main/component/java']
+                res.srcDirs = ['src/main/res','src/main/component/res']
+            } else {
+                // library模式下不需要Application
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java.srcDirs 'src/main/java'
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
